@@ -13,10 +13,6 @@ Os principais desafios que aprendi com esse projeto foram:
 
 ## Tabela de conteúdos
 
-Aqui você coloca links para acessar mais facilmente cada um dos tópicos do seu README.
-
-Exemplo:
-
 - [Arquitetura](#arquitetura)
 - [Modelo](#modelo)
 - [Funcionalidades](#funcionalidades)
