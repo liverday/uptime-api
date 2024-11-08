@@ -1,0 +1,9 @@
+FROM golang:1.23 as builder
+WORKDIR /build
+COPY go.mod  .
+RUN go mod download
+COPY . .
+RUN CGO_ENABLED=0 go build -o /build/app ./cmd/job
+
+FROM scratch
+COPY --from=builder /build/app /go/app

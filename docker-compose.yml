@@ -1,0 +1,88 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:16
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    command: postgres -c listen_addresses='*'
+
+  checker-1m:
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile.job
+    command: /go/app 1m
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASS: postgres
+      DB_NAME: postgres
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+
+  checker-5m:
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile.job
+    command: /go/app 5m
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASS: postgres
+      DB_NAME: postgres
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+  checker-10m:
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile.job
+    command: /go/app 10m
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASS: postgres
+      DB_NAME: postgres
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+  checker-15m:
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile.job
+    command: /go/app 15m
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASS: postgres
+      DB_NAME: postgres
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+  checker-30m:
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile.job
+    command: /go/app 5m
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASS: postgres
+      DB_NAME: postgres
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"

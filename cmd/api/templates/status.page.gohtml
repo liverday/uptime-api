@@ -1,0 +1,52 @@
+{{template "base" .}}
+
+{{ define "components/header" }}
+    <header class="flex justify-between space-x-4">
+        <h1 class="text-3xl font-semibold tracking-tight">{{.Title}}</h1>
+
+        <div>
+            <button class="bg-transparent mr-2 text-gray-500 hover:text-gray-700">Report a problem</button>
+            <button class="rounded-md px-2.5 py-2 bg-gray-100 text-gray-700 font-medium transition-all hover:bg-gray-200">Subscribe to updates</button>
+        </div>
+    </header>
+{{ end }}
+
+{{ define "components/monitor" }}
+
+{{ end }}
+
+{{ define "components/table"}}
+    <div class="rounded-md bg-white mt-8 border border-gray-100">
+        <div class="bg-gray-50 p-4 flex justify-between space-x-2 items-center">
+            <div class="flex items-center space-x-2">
+                <h2 class="text-xl font-semibold tracking-tight">System status</h2>
+                <div class="text-gray-500 mt-1 text-sm">< Last 90 days</div>
+            </div>
+        </div>
+        {{ range .Monitors }}
+            <div class="p-4 border-t border-gray-100 flex flex-col space-y-2">
+                <div class="flex justify-between items-center">
+                    <h3 class="text-lg font-semibold tracking-tight">{{.Monitor.Title}}</h3>
+                    <span class="text-gray-500 text-sm">{{.Uptime}} % Uptime</span>
+                </div>
+                <div class="flex flex-nowrap space-x-0.5">
+                    {{ range .Entries }}
+                        <div class="w-full h-[15px] rounded-md hover:contrast-[.85] hover:cursor-pointer {{if eq .Uptime 100.0 }}bg-green-500{{else if gt .Uptime 50.0 }}bg-yellow-500{{else if eq .Uptime 0.0}}bg-gray-300{{else}}bg-red-500{{end}}"></div>
+                    {{end}}
+                </div>
+            </div>
+        {{end}}
+    </div>
+{{ end }}
+
+{{ define "content" }}
+    <main class="h-screen min-w-screen">
+        <div class="max-w-3xl mx-auto px-8 py-6">
+            {{ block "components/header" .}}
+            {{end}}
+
+            {{block "components/table" .}}
+            {{end}}
+        </div>
+    </main>
+{{ end }}
